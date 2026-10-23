@@ -5,7 +5,7 @@ const Hero = () => {
 
   return (
 
-    <div className="flex flex-col items-center justify-center min-h-dvh relative text-center -z-5">
+    <div className="flex flex-col items-center justify-center min-h-dvh relative text-center">
       
       <div className="absolute inset-0 -z-10">
         <img 

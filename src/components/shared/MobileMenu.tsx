@@ -10,7 +10,7 @@ const MobileMenu = ({ isMenuOpen, setIsMenuOpen }: MobileMenuProps) => {
 
   return (
 
-    <div className={`bg-surface duration-300 fixed h-dvh inset-0 transition ${isMenuOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+    <div className={`bg-surface duration-300 fixed h-dvh inset-0 transition z-50 ${isMenuOpen ? 'translate-x-0' : '-translate-x-full'}`}>
 
       <div className="flex flex-col font-medium gap-5 items-center pt-15 relative">
         <NavLink
