@@ -2,6 +2,7 @@ import { Search } from "lucide-react";
 import { useEffect, useState } from "react";
 import type { Show } from "../types/show.types";
 import { getShows } from "../services/shows.services";
+import MovieCards from "../components/movies/MovieCards";
 
 const Movies = () => {
 
@@ -35,7 +36,7 @@ const Movies = () => {
           browse movies
         </h2>
 
-        <div className="mb-6 mt-4 relative">
+        <div className="mt-4 relative">
           <Search  className="absolute left-5 size-5 text-muted top-1/2 -translate-y-1/2"/>
 
           <input
@@ -44,6 +45,10 @@ const Movies = () => {
             type="text" 
           />
         </div>
+
+        {
+          shows && <MovieCards shows={shows} />
+        }
 
       </div>
 
