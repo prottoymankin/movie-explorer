@@ -1,6 +1,29 @@
 import { Search } from "lucide-react";
+import { useEffect, useState } from "react";
+import type { Show } from "../types/show.types";
+import { getShows } from "../services/shows.services";
 
 const Movies = () => {
+
+  const [shows, setShows] = useState<Show[]>([]);
+
+  useEffect(() => {
+    const fetchShows = async () => {
+      try {
+        const data = await getShows();
+        setShows(data);
+        console.log(data);
+      } catch (error: unknown) {
+        if (error instanceof Error) {
+          console.log(error.message);
+        } else {
+          console.log("An unexpected error occured.");
+        }
+      }
+    };
+    
+    fetchShows();
+  }, []);
 
   return (
 
@@ -16,7 +39,7 @@ const Movies = () => {
           <Search  className="absolute left-5 size-5 text-muted top-1/2 -translate-y-1/2"/>
 
           <input
-            className="border border-line focus:border-accent max-w-xl outline-0 pl-15 py-4 rounded-full text-sm sm:text-base w-full" 
+            className="bg-surface/80 border border-line focus:border-accent max-w-xl outline-0 pl-15 py-4 rounded-full text-sm sm:text-base w-full" 
             placeholder="Search by title e.g. John Wick"
             type="text" 
           />
