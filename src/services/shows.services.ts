@@ -11,3 +11,15 @@ export const getShows = async (): Promise<Show[]> => {
 
   return response.json();
 };
+
+export const getSearchShows = async (query: string) => {
+  const response = await fetch(`${BASE_URL}/search/shows?q=${encodeURIComponent(query)}`);
+
+  if (!response.ok) {
+    throw new Error ("Failed to fetch serach result.");
+  }
+
+  const data = await response.json();
+
+  return data.map((item: { show: Show }) => item.show );
+};

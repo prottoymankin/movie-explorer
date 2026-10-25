@@ -1,7 +1,7 @@
 import { Search } from "lucide-react";
 import { useEffect, useState } from "react";
 import type { Show } from "../types/show.types";
-import { getShows } from "../services/shows.services";
+import { getSearchShows, getShows } from "../services/shows.services";
 import MovieCards from "../components/movies/MovieCards";
 import Loader from "../components/shared/Loader";
 import Pagination from "../components/movies/Pagination";
@@ -11,10 +11,19 @@ const Movies = () => {
   const [shows, setShows] = useState<Show[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [currentPage, setCurrentPage] = useState<number>(1);
+  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [searchResults, setSearchResults] = useState<Show[]>([]);
+
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setSearchQuery(value);
+  };
+
+  const displayedShows = searchQuery.trim() ? searchResults : shows;
 
   const showsPerPage = 12;
 
-  const totalPage = Math.ceil(shows.length / showsPerPage);
+  const totalPage = Math.ceil(displayedShows.length / showsPerPage);
 
   const pages = Array.from(
     { length: totalPage },
@@ -26,7 +35,9 @@ const Movies = () => {
   };
 
   const startIndex = (currentPage - 1) * showsPerPage;
-  const currentShows = shows.slice(startIndex, startIndex + showsPerPage);
+  const currentShows = displayedShows.slice(startIndex, startIndex + showsPerPage);
+
+  console.log(currentShows)
 
   useEffect(() => {
     const fetchShows = async () => {
@@ -47,6 +58,30 @@ const Movies = () => {
     fetchShows();
   }, []);
 
+  useEffect(() => {
+    const query = searchQuery.trim();
+
+    if (!query) return;
+
+    const timer = setTimeout(async () => {
+      try {
+        const result = await getSearchShows(query);
+        setSearchResults(result);
+        setCurrentPage(1);
+        console.log(result);
+      } catch (error:unknown) {
+        if (error instanceof Error) {
+          console.log(error.message);
+        }
+
+        console.log("An unexpected errors occured.");
+      }
+    }, 500);
+
+    return () => clearTimeout(timer);
+
+  }, [searchQuery])
+
   return (
 
     <div className="px-5">
@@ -62,6 +97,7 @@ const Movies = () => {
 
           <input
             className="bg-surface/80 border border-line focus:border-accent max-w-xl outline-0 pl-15 py-4 rounded-full text-sm sm:text-base w-full" 
+            onChange={handleSearch}
             placeholder="Search by title e.g. John Wick"
             type="text" 
           />
@@ -74,10 +110,14 @@ const Movies = () => {
             <div className="py-10">
               <MovieCards shows={currentShows} />
 
-              <Pagination
-                pages={pages}
-                onPageChange={hanndlePageChange}
-              />
+              {
+                totalPage > 1 && (
+                  <Pagination
+                    pages={pages}
+                    onPageChange={hanndlePageChange}
+                  />
+                )
+              }
             </div>
            )
         }

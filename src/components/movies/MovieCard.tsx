@@ -36,7 +36,7 @@ const MovieCard = ({ show, onShowDetails }: MovieCardProps) => {
                 src={star} 
               />
 
-              <p className="text-sm">{show.rating.average}</p>
+              <p className="text-sm">{show.rating?.average ?? "N/A"}</p>
             </div>
 
             <p className="text-sm">{show.premiered}</p>
