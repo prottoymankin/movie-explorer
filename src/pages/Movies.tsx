@@ -4,18 +4,35 @@ import type { Show } from "../types/show.types";
 import { getShows } from "../services/shows.services";
 import MovieCards from "../components/movies/MovieCards";
 import Loader from "../components/shared/Loader";
+import Pagination from "../components/movies/Pagination";
 
 const Movies = () => {
 
   const [shows, setShows] = useState<Show[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+
+  const showsPerPage = 12;
+
+  const totalPage = Math.ceil(shows.length / showsPerPage);
+
+  const pages = Array.from(
+    { length: totalPage },
+    (_, index) => index + 1
+  );
+
+  const hanndlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
+
+  const startIndex = (currentPage - 1) * showsPerPage;
+  const currentShows = shows.slice(startIndex, startIndex + showsPerPage);
 
   useEffect(() => {
     const fetchShows = async () => {
       try {
         const data = await getShows();
         setShows(data);
-        console.log(data);
       } catch (error: unknown) {
         if (error instanceof Error) {
           console.log(error.message);
@@ -54,7 +71,14 @@ const Movies = () => {
           isLoading ? (
             <Loader />
            ): (
-            <MovieCards shows={shows} />
+            <div className="py-10">
+              <MovieCards shows={currentShows} />
+
+              <Pagination
+                pages={pages}
+                onPageChange={hanndlePageChange}
+              />
+            </div>
            )
         }
 
