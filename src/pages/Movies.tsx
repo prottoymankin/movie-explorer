@@ -3,10 +3,12 @@ import { useEffect, useState } from "react";
 import type { Show } from "../types/show.types";
 import { getShows } from "../services/shows.services";
 import MovieCards from "../components/movies/MovieCards";
+import Loader from "../components/shared/Loader";
 
 const Movies = () => {
 
   const [shows, setShows] = useState<Show[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchShows = async () => {
@@ -20,6 +22,8 @@ const Movies = () => {
         } else {
           console.log("An unexpected error occured.");
         }
+      } finally {
+        setIsLoading(false);
       }
     };
     
@@ -47,7 +51,11 @@ const Movies = () => {
         </div>
 
         {
-          shows && <MovieCards shows={shows} />
+          isLoading ? (
+            <Loader />
+           ): (
+            <MovieCards shows={shows} />
+           )
         }
 
       </div>
