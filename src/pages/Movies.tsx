@@ -5,6 +5,7 @@ import { getSearchShows, getShows } from "../services/shows.services";
 import MovieCards from "../components/movies/MovieCards";
 import Loader from "../components/shared/Loader";
 import Pagination from "../components/movies/Pagination";
+import NoSearchResults from "../components/movies/NoSearchResults";
 
 const Movies = () => {
 
@@ -109,7 +110,7 @@ const Movies = () => {
         {
           isLoading ? (
             <Loader />
-          ) : (
+          ) : currentShows.length > 0 ? (
             <div className="py-10">
               <MovieCards shows={currentShows} />
 
@@ -122,6 +123,8 @@ const Movies = () => {
                 )
               }
             </div>
+          ) : (
+            <NoSearchResults />
           )
         }
 
