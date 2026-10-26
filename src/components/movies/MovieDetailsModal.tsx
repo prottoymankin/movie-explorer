@@ -27,7 +27,7 @@ const MovieDetailsModal = ({ show, onShowDetails }: MovieDetailsModalProps) => {
     >
       
       <div 
-        className="bg-surface border border-line h-dvh lg:h-auto lg:max-w-3xl px-10 py-5 relative rounded-xl space-y-5 w-full overflow-y-auto"
+        className="bg-surface border border-line h-dvh lg:h-130 lg:max-w-3xl px-10 py-5 relative rounded-xl scrollbar-none space-y-5 w-full overflow-y-auto"
         onClick={(e) => e.stopPropagation()}
       >
 
