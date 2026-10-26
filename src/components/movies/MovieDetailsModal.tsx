@@ -2,6 +2,7 @@ import { X } from "lucide-react";
 import type { Show } from "../../types/show.types";
 import star from "../../assets/star.png";
 import { useEffect } from "react";
+import noImage from "../../assets/no-image.jpg";
 
 type MovieDetailsModalProps = {
   show: Show;
@@ -41,7 +42,7 @@ const MovieDetailsModal = ({ show, onShowDetails }: MovieDetailsModalProps) => {
           <div className="h-80 overflow-hidden rounded-xl w-fit">
             <img 
               alt="" 
-              src={show.image?.original} 
+              src={show.image?.original || noImage} 
               className="h-full"
             />
           </div>
@@ -58,7 +59,7 @@ const MovieDetailsModal = ({ show, onShowDetails }: MovieDetailsModalProps) => {
                 </p>
 
                 <p className="hyphens-auto text-justify text-sm">
-                  {show.premiered}
+                  {show.premiered || "N/A"}
                 </p>
               </div>
 
@@ -75,7 +76,7 @@ const MovieDetailsModal = ({ show, onShowDetails }: MovieDetailsModalProps) => {
                   />
 
                   <p className="hyphens-auto text-justify text-sm">
-                    {show.rating.average}
+                    {show.rating.average || "N/A"}
                   </p>
                 </div>
               </div>
@@ -88,7 +89,9 @@ const MovieDetailsModal = ({ show, onShowDetails }: MovieDetailsModalProps) => {
                 </p>
                 
                 <p className="hyphens-auto text-justify text-sm">
-                  {`${show.runtime} Minutes`}
+                  {
+                    show.runtime ? `${show.runtime} Minutes` : "N/A"
+                  }
                 </p>
               </div>
 
@@ -98,7 +101,7 @@ const MovieDetailsModal = ({ show, onShowDetails }: MovieDetailsModalProps) => {
                 </p>
 
                 <p className="hyphens-auto text-justify text-sm">
-                  {show.language}
+                  {show.language || "N/A"}
                 </p>
               </div>
             </div>
@@ -109,7 +112,7 @@ const MovieDetailsModal = ({ show, onShowDetails }: MovieDetailsModalProps) => {
               </p>
               
               <p className="hyphens-auto text-justify text-sm">
-                { show.genres.join(", ") }
+                { show.genres.join(", ") || "N/A"}
               </p>
             </div>
 
@@ -122,7 +125,7 @@ const MovieDetailsModal = ({ show, onShowDetails }: MovieDetailsModalProps) => {
           </p>
 
           <p className="hyphens-auto text-justify text-sm">
-            {show.summary?.replace(/<[^>]*>/g, "")}
+            {show.summary?.replace(/<[^>]*>/g, "") || "There is no summary available."}
           </p>
         </div>
 

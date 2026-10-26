@@ -15,7 +15,9 @@ const Movies = () => {
   const [searchResults, setSearchResults] = useState<Show[]>([]);
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setIsLoading(true);
     const value = e.target.value;
+    if (!value) setIsLoading(false);
     setSearchQuery(value);
   };
 
@@ -73,14 +75,15 @@ const Movies = () => {
         if (error instanceof Error) {
           console.log(error.message);
         }
-
         console.log("An unexpected errors occured.");
+      } finally {
+        setIsLoading(false);
       }
     }, 500);
 
     return () => clearTimeout(timer);
 
-  }, [searchQuery])
+  }, [searchQuery]);
 
   return (
 
@@ -106,7 +109,7 @@ const Movies = () => {
         {
           isLoading ? (
             <Loader />
-           ): (
+          ) : (
             <div className="py-10">
               <MovieCards shows={currentShows} />
 
@@ -119,7 +122,7 @@ const Movies = () => {
                 )
               }
             </div>
-           )
+          )
         }
 
       </div>
