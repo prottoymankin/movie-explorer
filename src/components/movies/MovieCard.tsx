@@ -52,7 +52,6 @@ const MovieCard = ({ show, onShowDetails }: MovieCardProps) => {
         </div>
 
       </div>
-
     </>
 
   );

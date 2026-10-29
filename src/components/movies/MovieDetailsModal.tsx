@@ -115,7 +115,6 @@ const MovieDetailsModal = ({ show, onShowDetails }: MovieDetailsModalProps) => {
                 { show.genres.join(", ") || "N/A"}
               </p>
             </div>
-
           </div>
         </div>
 

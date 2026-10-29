@@ -35,7 +35,6 @@ const MobileMenu = ({ isMenuOpen, setIsMenuOpen }: MobileMenuProps) => {
         </button>
       </div>
 
-
     </div>
 
   );

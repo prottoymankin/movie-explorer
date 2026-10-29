@@ -6,6 +6,7 @@ import MovieCards from "../components/movies/MovieCards";
 import Loader from "../components/shared/Loader";
 import Pagination from "../components/movies/Pagination";
 import NoSearchResults from "../components/movies/NoSearchResults";
+import toast from "react-hot-toast";
 
 const Movies = () => {
 
@@ -40,8 +41,6 @@ const Movies = () => {
   const startIndex = (currentPage - 1) * showsPerPage;
   const currentShows = displayedShows.slice(startIndex, startIndex + showsPerPage);
 
-  console.log(currentShows)
-
   useEffect(() => {
     const fetchShows = async () => {
       try {
@@ -49,9 +48,9 @@ const Movies = () => {
         setShows(data);
       } catch (error: unknown) {
         if (error instanceof Error) {
-          console.log(error.message);
+          toast.error(error.message);
         } else {
-          console.log("An unexpected error occured.");
+          toast.error("An unexpected error occured.");
         }
       } finally {
         setIsLoading(false);
@@ -71,19 +70,17 @@ const Movies = () => {
         const result = await getSearchShows(query);
         setSearchResults(result);
         setCurrentPage(1);
-        console.log(result);
       } catch (error:unknown) {
         if (error instanceof Error) {
-          console.log(error.message);
+          toast.error(error.message);
         }
-        console.log("An unexpected errors occured.");
+        toast.error("An unexpected error occured.");
       } finally {
         setIsLoading(false);
       }
     }, 500);
 
     return () => clearTimeout(timer);
-
   }, [searchQuery]);
 
   return (
