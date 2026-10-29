@@ -1,5 +1,7 @@
 ## Movie Explorer
 
+Live Demo: [Movie Explorer](https://movie-explorer-hub.vercel.app/)
+
 This is a simple project I built to improve my TypeScript skills and gain more practical experience with React and TypeScript.
 
 ### Features
